@@ -1,0 +1,31 @@
+{
+    "context": {
+        "page": {
+            "path": "/Users/georgefraser/Documents/AnalyticsJsWithoutSegment/Test.html",
+            "referrer": "",
+            "search": "",
+            "title": "Analytics.js",
+            "url": "file:///Users/georgefraser/Documents/AnalyticsJsWithoutSegment/Test.html"
+        },
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "library": {
+            "name": "analytics.js",
+            "version": "2.11.0"
+        }
+    },
+    "integrations": {},
+    "properties": {
+        "path": "/Users/georgefraser/Documents/AnalyticsJsWithoutSegment/Test.html",
+        "referrer": "",
+        "search": "",
+        "title": "Analytics.js",
+        "url": "file:///Users/georgefraser/Documents/AnalyticsJsWithoutSegment/Test.html"
+    },
+    "anonymousId": "2c0c1475-ad66-4b9e-a68f-b3436bf156ad",
+    "timestamp": "2018-05-26T03:20:07.997Z",
+    "type": "page",
+    "writeKey": "NO_KEY",
+    "userId": null,
+    "messageId": "cbb36a9d-8100-47f2-9b72-6c8a8e34f34c",
+    "sentAt": "2018-05-26T03:20:07.998Z"
+}
