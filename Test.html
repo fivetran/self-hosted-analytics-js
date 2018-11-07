@@ -48,7 +48,8 @@
       // On load init our integrations
       analytics.initialize({
             'Segment.io': {
-                apiKey: 'NO_KEY'
+                apiKey: 'NO_KEY',
+                apiHost: 'us-central1-sandbox-testing-215308.cloudfunctions.net/segment'
             }
       });  
       // Now copy whatever we applied to our dummy object to the real analytics
