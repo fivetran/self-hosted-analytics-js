@@ -18,8 +18,14 @@
   color: white;
 }
 
+.App-nav {
+  position: relative;
+  z-index: 1;
+}
+
 .App-link {
   color: #61dafb;
+  margin: 0 20px;
 }
 
 @keyframes App-logo-spin {
