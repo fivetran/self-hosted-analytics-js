@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Router, Route, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import logo from './logo.svg';
 import './App.css';
 
+const history = createBrowserHistory();
+
+history.listen(location => window['analytics'].page());
+
 const App = () => (
-  <Router>
+  <Router history={history}>
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
