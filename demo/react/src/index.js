@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {initAnalytics} from './initAnalytics';
 import * as serviceWorker from './serviceWorker';
+
+initAnalytics('events.fivetran.com/webhooks/1k56c2c4xlti6/segment');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
