@@ -1,4 +1,4 @@
-# How to use analytics.js without segment
+# How to self-host analytics.js
 
 ## Preparation
 

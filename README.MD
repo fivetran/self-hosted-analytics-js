@@ -1,6 +1,6 @@
 # Overview
 
-This repo is example how to use segment analytics with fivetran without segment.
+This repo is example how to self-host analytics.js and collect events using Fivetran
 
 For testing purpose we created Fivetran Segment connector with the following endpoint: https://events.fivetran.com/webhooks/1k56c2c4xlti6/segment
 

@@ -1,8 +1,8 @@
-# How to use analytics.js without segment
+# How to self-host analytics.js
 
 ## Initialize analytics.js
 
-To initialize analytics.js without segment please read the [following article](../simple/README.md).
+To initialize analytics.js please read the [following article](../simple/README.md).
 
 ## Sync analytics.js page tracking with client-side routing (react-router v4)
 
