@@ -4,7 +4,7 @@
 
 1. Go to the segment website: https://segment.com/docs/sources/website/analytics.js/quickstart/ and copy non-minified code snippet
 1. Paste this snippet into the head of your site
-1. Create Segment Webhook connector in Fivetran (Should perfor 1 and 2 steps from this guide: https://fivetran.com/docs/events/segment/segment-webhooks-setup-guide)
+1. Create a webhook collector. If you want to use Fivetran to collect your Segment events, follow steps 1 and 2 from this guide: https://fivetran.com/docs/events/segment/segment-webhooks-setup-guide.
 
 ## Modify code snippet
 
@@ -25,7 +25,7 @@
         window.analytics.initialize({
             'Segment.io': {
                 apiKey: 'NO_KEY',
-                apiHost: 'PASTE YOUR FIVETRAN WEBHOOK URL HERE'
+                apiHost: 'PASTE YOUR COLLECTOR URL HERE'
             }
         });
 
@@ -43,5 +43,5 @@
     first.parentNode.insertBefore(script, first);
     analytics._loadOptions = options;
     ```
-    And replace `PASTE YOUR FIVETRAN WEBHOOK URL HERE` with your Fivetran Segment webhook url.
-3. Done. Now you can track anything with `analytics.js` and Fivetran. To read more, please, look at Segment Analytics docs: https://segment.com/docs/sources/website/analytics.js/
+    And replace `PASTE YOUR COLLECTOR URL HERE` with the url where you want events to be sent.
+3. Done. Now you can track anything with `analytics.js`. To read more, please, look at Segment Analytics docs: https://segment.com/docs/sources/website/analytics.js/

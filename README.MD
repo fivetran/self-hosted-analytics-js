@@ -1,12 +1,6 @@
 # Overview
 
-This repo is example how to self-host analytics.js and collect events using Fivetran
-
-For testing purpose we created Fivetran Segment connector with the following endpoint: https://events.fivetran.com/webhooks/1k56c2c4xlti6/segment
-
-All events will be synced with this connector. 
-
-Also, we built analytics.js from this repo: https://github.com/segmentio/analytics.js and put it to  https://static.fivetran.com/scripts/analytics.js.
+This repo is example how to self-host analytics.js. We built analytics.js from https://github.com/fivetran/analytics.js and are hosting it at https://static.fivetran.com/scripts/analytics.js.
 
 # How to use
 

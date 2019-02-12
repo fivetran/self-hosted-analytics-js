@@ -5,7 +5,7 @@ import App from './App';
 import {initAnalytics} from './initAnalytics';
 import * as serviceWorker from './serviceWorker';
 
-initAnalytics('events.fivetran.com/webhooks/1k56c2c4xlti6/segment');
+initAnalytics('PASTE YOUR COLLECTOR URL HERE');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

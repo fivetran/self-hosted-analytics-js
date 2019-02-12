@@ -1,4 +1,4 @@
-export const initAnalytics = (fivetranSegmentWebhookHost: string) => {
+export const initAnalytics = (webhookHost) => {
      // Create a queue, but don't obliterate an existing one!
      var analytics = window.analytics = window.analytics || [];
 
@@ -75,7 +75,7 @@ export const initAnalytics = (fivetranSegmentWebhookHost: string) => {
            window.analytics.initialize({
                'Segment.io': {
                    apiKey: 'NO_KEY',
-                   apiHost: fivetranSegmentWebhookHost
+                   apiHost: webhookHost
                }
            });
 

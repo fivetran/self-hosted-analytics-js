@@ -1,4 +1,4 @@
-# How to self-host analytics.js
+# How to self-host analytics.js with react-router
 
 ## Initialize analytics.js
 
