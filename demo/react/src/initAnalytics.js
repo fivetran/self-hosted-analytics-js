@@ -1,57 +1,101 @@
 export const initAnalytics = (fivetranSegmentWebhookHost: string) => {
-    window['analytics'] || (window['analytics'] = []);
-    window['analytics'].methods = ['identify', 'track', 'trackLink', 'trackForm', 'trackClick', 'trackSubmit', 'page', 'pageview', 'ab', 'alias', 'ready', 'group', 'on', 'once', 'off'];
-    window['analytics'].factory = function(method) {
-        return function() {
-            var args = Array.prototype.slice.call(arguments);
-            args.unshift(method);
-            window['analytics'].push(args);
-            return window['analytics'];
-        };
-    };
-    for (let i = 0; i < window['analytics'].methods.length; i++) {
-        const method = window['analytics'].methods[i];
-        window['analytics'][method] = window['analytics'].factory(method);
-    }
+     // Create a queue, but don't obliterate an existing one!
+     var analytics = window.analytics = window.analytics || [];
 
-    // Load analytics async
-    window['analytics'].load = function(callback) {
-        if (document.getElementById('analytics-js')) return;
+     // If the real analytics.js is already on the page return.
+     if (analytics.initialize) return;
 
-        // We make a copy if our dummy object
-        window.a = window['analytics'];
-        const script = document.createElement('script');
-        script.async = true;
-        script.id = 'analytics-js';
-        script.type = 'text/javascript';
-        // script.src = ('https:' === document.location.protocol ? 'https://' : 'http://') + 'path/to/your/analytics.js';
-        script.src = 'https://static.fivetran.com/scripts/analytics.js';
-        script.addEventListener('load', function(e) {
-            if (typeof callback === 'function') {
-                callback(e);
-            }
-        }, false);
+     // If the snippet was invoked already show an error.
+     if (analytics.invoked) {
+       if (window.console && console.error) {
+         console.error('Segment snippet included twice.');
+       }
+       return;
+     }
 
-        const first = document.getElementsByTagName('script')[0];
-        first.parentNode.insertBefore(script, first);
-    };
+     // Invoked flag, to make sure the snippet
+     // is never invoked twice.
+     analytics.invoked = true;
 
-    window['analytics'].load(function() {
-        // On load init our integrations
-        window['analytics'].initialize({
-                'Segment.io': {
-                    apiKey: 'NO_KEY',
-                    apiHost: fivetranSegmentWebhookHost
-                }
-        });
-        // Now copy whatever we applied to our dummy object to the real analytics
-        while (window.a.length > 0) {
-            var item = window.a.shift();
-            var method = item.shift();
-            if (window['analytics'][method])
-                window['analytics'][method].apply(window['analytics'], item);
-        }
-    });
+     // A list of the methods in Analytics.js to stub.
+     analytics.methods = [
+       'trackSubmit',
+       'trackClick',
+       'trackLink',
+       'trackForm',
+       'pageview',
+       'identify',
+       'reset',
+       'group',
+       'track',
+       'ready',
+       'alias',
+       'debug',
+       'page',
+       'once',
+       'off',
+       'on'
+     ];
 
-    window['analytics'].page();
+     // Define a factory to create stubs. These are placeholders
+     // for methods in Analytics.js so that you never have to wait
+     // for it to load to actually record data. The `method` is
+     // stored as the first argument, so we can replay the data.
+     analytics.factory = function(method){
+       return function(){
+         var args = Array.prototype.slice.call(arguments);
+         args.unshift(method);
+         analytics.push(args);
+         return analytics;
+       };
+     };
+
+     // For each of our methods, generate a queueing stub.
+     for (var i = 0; i < analytics.methods.length; i++) {
+       var key = analytics.methods[i];
+       analytics[key] = analytics.factory(key);
+     }
+
+     // Define a method to load Analytics.js from our CDN,
+     // and that will be sure to only ever load it once.
+     analytics.load = function(key, options){
+       // Create an async script element based on your key.
+       var stubAnalytics = analytics;
+       var script = document.createElement('script');
+       script.type = 'text/javascript';
+       script.async = true;
+       script.src = 'https://static.fivetran.com/scripts/analytics.js';
+
+       // Insert our script next to the first script element.
+       var first = document.getElementsByTagName('script')[0];
+       first.parentNode.insertBefore(script, first);
+       analytics._loadOptions = options;
+
+       script.addEventListener('load', function() {
+           window.analytics.initialize({
+               'Segment.io': {
+                   apiKey: 'NO_KEY',
+                   apiHost: fivetranSegmentWebhookHost
+               }
+           });
+
+           while (stubAnalytics.length > 0) {
+               var item = stubAnalytics.shift();
+               var method = item.shift();
+               if (stubAnalytics[method]) window.analytics[method].apply(window.analytics, item);
+           }
+       }, false)
+     };
+
+     // Add a version to keep track of what's in the wild.
+     analytics.SNIPPET_VERSION = '4.1.0';
+
+     // Load Analytics.js with your key, which will automatically
+     // load the tools you've enabled for your account. Boosh!
+     analytics.load("NO_KEY");
+
+     // Make the first page call to load the integrations. If
+     // you'd like to manually name or tag the page, edit or
+     // move this call however you'd like.
+     analytics.page();
 }
