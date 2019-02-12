@@ -1,12 +1,210 @@
 <!doctype html>
 
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Analytics.js</title>
-  <link href="/index.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .App {
+      text-align: center;
+    }
+
+    .App-header {
+      background-color: #212121;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 6vmin);
+      color: white;
+    }
+
+    .App-nav {
+      position: relative;
+      z-index: 1;
+    }
+
+    .loading {
+      display: block;
+      position: relative;
+      margin: 10px auto 50px;
+      width: 100px;
+      height: 100px;
+
+    }
+
+    .loading-wrapper {
+      position: absolute;
+      overflow: hidden;
+      top: 0;
+      bottom: 0;
+      left: 13.889%;
+      right: 13.889%;
+    }
+
+    .rect1 {
+      position: absolute;
+      bottom: 0;
+      left: 4.3%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 24.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect1 1.2s linear infinite;
+    }
+
+    .rect2 {
+      position: absolute;
+      bottom: 0;
+      left: 23.9%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 49.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect2 1.2s linear infinite;
+      -webkit-animation-delay: -1s;
+      animation-delay: -1s;
+    }
+
+    .rect3 {
+      position: absolute;
+      bottom: 0;
+      left: 38.2%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 100%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect3 1.2s linear infinite;
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+    }
+
+    .rect4 {
+      position: absolute;
+      top: 0;
+      right: 27.9%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 49.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect4 1.2s linear infinite;
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+    }
+
+    .rect5 {
+      position: absolute;
+      top: 0;
+      right: 6.3%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 24.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect5 1.2s linear infinite;
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
+
+    @keyframes rect1 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 25%;
+        left: 4.3%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 11%;
+        transform: skew(20deg);
+      }
+    }
+
+    @keyframes rect2 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        left: 23.9%;
+        height: 50%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 36.6%;
+      }
+    }
+
+    @keyframes rect3 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 100%;
+        left: 38.2%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 64%;
+      }
+    }
+
+    @keyframes rect4 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 50%;
+        right: 27.9%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        right: 41%;
+      }
+    }
+
+    @keyframes rect5 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 25%;
+        right: 6.3%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        right: 13%;
+      }
+    }
+  </style>
   <script type="text/javascript">
-    (function(){
+    (function () {
 
       // Create a queue, but don't obliterate an existing one!
       var analytics = window.analytics = window.analytics || [];
@@ -50,8 +248,8 @@
       // for methods in Analytics.js so that you never have to wait
       // for it to load to actually record data. The `method` is
       // stored as the first argument, so we can replay the data.
-      analytics.factory = function(method){
-        return function(){
+      analytics.factory = function (method) {
+        return function () {
           var args = Array.prototype.slice.call(arguments);
           args.unshift(method);
           analytics.push(args);
@@ -67,7 +265,7 @@
 
       // Define a method to load Analytics.js from our CDN,
       // and that will be sure to only ever load it once.
-      analytics.load = function(key, options){
+      analytics.load = function (key, options) {
         // Create an async script element based on your key.
         var stubAnalytics = analytics;
         var script = document.createElement('script');
@@ -80,19 +278,20 @@
         first.parentNode.insertBefore(script, first);
         analytics._loadOptions = options;
 
-        script.addEventListener('load', function() {
-            window.analytics.initialize({
-                'Segment.io': {
-                    apiKey: 'NO_KEY',
-                    apiHost: 'PASTE YOUR COLLECTOR URL HERE'
-                }
-            });
-
-            while (stubAnalytics.length > 0) {
-                var item = stubAnalytics.shift();
-                var method = item.shift();
-                if (stubAnalytics[method]) window.analytics[method].apply(window.analytics, item);
+        script.addEventListener('load', function () {
+          window.analytics.initialize({
+            'Segment.io': {
+              apiKey: 'NO_KEY',
+              // View this endpoint at https://pipedream.com/r/enxqu2io6sdml
+              apiHost: 'https://enxqu2io6sdml.x.pipedream.net'
             }
+          });
+
+          while (stubAnalytics.length > 0) {
+            var item = stubAnalytics.shift();
+            var method = item.shift();
+            if (stubAnalytics[method]) window.analytics[method].apply(window.analytics, item);
+          }
         }, false)
       };
 
@@ -111,19 +310,21 @@
 
   </script>
 </head>
+
 <body>
-    <div class="App">
-        <header class="App-header">
-            <div class="loading">
-                <div class="loading-wrapper">
-                    <div class="rect1"></div>
-                    <div class="rect2"></div>
-                    <div class="rect3"></div>
-                    <div class="rect4"></div>
-                    <div class="rect5"></div>
-                </div>
-            </div>
-        </header>
-    </div>
+  <div class="App">
+    <header class="App-header">
+      <div class="loading">
+        <div class="loading-wrapper">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+    </header>
+  </div>
 </body>
+
 </html>

@@ -5,7 +5,8 @@ import App from './App';
 import {initAnalytics} from './initAnalytics';
 import * as serviceWorker from './serviceWorker';
 
-initAnalytics('PASTE YOUR COLLECTOR URL HERE');
+// View this endpoint at https://pipedream.com/r/enxqu2io6sdml
+initAnalytics('https://enxqu2io6sdml.x.pipedream.net');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
