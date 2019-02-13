@@ -1,0 +1,371 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Analytics.js</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .App {
+      text-align: center;
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    }
+
+    .App-header {
+      background-color: #212121;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 6vmin);
+      color: white;
+    }
+
+    .App-nav {
+      position: relative;
+      z-index: 1;
+    }
+
+    .App-info {
+      color: #dcdcdc;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    .App-info a {
+      color: #dcdcdc;
+    }
+
+    button {
+      background: #2e64ea;
+      color: #dcdcdc;
+      font-size: 18px;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      transition: background ease .4s;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background: #437aff;
+    }
+
+    button:active {
+      background: #1a5fdd;
+    }
+
+    .button-description {
+      font-size: 14px;
+    }
+
+    .loading {
+      display: block;
+      position: relative;
+      margin: 10px auto 50px;
+      width: 100px;
+      height: 100px;
+
+    }
+
+    .loading-wrapper {
+      position: absolute;
+      overflow: hidden;
+      top: 0;
+      bottom: 0;
+      left: 13.889%;
+      right: 13.889%;
+    }
+
+    .rect1 {
+      position: absolute;
+      bottom: 0;
+      left: 4.3%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 24.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect1 1.2s linear infinite;
+    }
+
+    .rect2 {
+      position: absolute;
+      bottom: 0;
+      left: 23.9%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 49.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect2 1.2s linear infinite;
+      -webkit-animation-delay: -1s;
+      animation-delay: -1s;
+    }
+
+    .rect3 {
+      position: absolute;
+      bottom: 0;
+      left: 38.2%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 100%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect3 1.2s linear infinite;
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+    }
+
+    .rect4 {
+      position: absolute;
+      top: 0;
+      right: 27.9%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 49.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect4 1.2s linear infinite;
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+    }
+
+    .rect5 {
+      position: absolute;
+      top: 0;
+      right: 6.3%;
+      background: #2e64ea;
+      width: 18.078%;
+      height: 24.8%;
+      border-radius: 8%;
+      transform: skew(20deg);
+      animation: rect5 1.2s linear infinite;
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
+
+    @keyframes rect1 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 25%;
+        left: 4.3%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 11%;
+        transform: skew(20deg);
+      }
+    }
+
+    @keyframes rect2 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        left: 23.9%;
+        height: 50%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 36.6%;
+      }
+    }
+
+    @keyframes rect3 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 100%;
+        left: 38.2%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        left: 64%;
+      }
+    }
+
+    @keyframes rect4 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 50%;
+        right: 27.9%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        right: 41%;
+      }
+    }
+
+    @keyframes rect5 {
+
+      0%,
+      40%,
+      100% {
+        background-color: #2e64ea;
+        height: 25%;
+        right: 6.3%;
+      }
+
+      20% {
+        background-color: #dcdcdc;
+        height: 0;
+        right: 13%;
+      }
+    }
+  </style>
+  <script type="text/javascript">
+    (function () {
+
+      // Create a queue, but don't obliterate an existing one!
+      var analytics = window.analytics = window.analytics || [];
+
+      // If the real analytics.js is already on the page return.
+      if (analytics.initialize) return;
+
+      // If the snippet was invoked already show an error.
+      if (analytics.invoked) {
+        if (window.console && console.error) {
+          console.error('Segment snippet included twice.');
+        }
+        return;
+      }
+
+      // Invoked flag, to make sure the snippet
+      // is never invoked twice.
+      analytics.invoked = true;
+
+      // A list of the methods in Analytics.js to stub.
+      analytics.methods = [
+        'trackSubmit',
+        'trackClick',
+        'trackLink',
+        'trackForm',
+        'pageview',
+        'identify',
+        'reset',
+        'group',
+        'track',
+        'ready',
+        'alias',
+        'debug',
+        'page',
+        'once',
+        'off',
+        'on'
+      ];
+
+      // Define a factory to create stubs. These are placeholders
+      // for methods in Analytics.js so that you never have to wait
+      // for it to load to actually record data. The `method` is
+      // stored as the first argument, so we can replay the data.
+      analytics.factory = function (method) {
+        return function () {
+          var args = Array.prototype.slice.call(arguments);
+          args.unshift(method);
+          analytics.push(args);
+          return analytics;
+        };
+      };
+
+      // For each of our methods, generate a queueing stub.
+      for (var i = 0; i < analytics.methods.length; i++) {
+        var key = analytics.methods[i];
+        analytics[key] = analytics.factory(key);
+      }
+
+      // Define a method to load Analytics.js from our CDN,
+      // and that will be sure to only ever load it once.
+      analytics.load = function (key, options) {
+        // Create an async script element based on your key.
+        var stubAnalytics = analytics;
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = 'https://static.fivetran.com/scripts/analytics.js';
+
+        // Insert our script next to the first script element.
+        var first = document.getElementsByTagName('script')[0];
+        first.parentNode.insertBefore(script, first);
+        analytics._loadOptions = options;
+
+        script.addEventListener('load', function () {
+          window.analytics.initialize({
+            'Segment.io': {
+              apiKey: 'NO_KEY',
+              // View this endpoint at https://pipedream.com/r/enxqu2io6sdml
+              apiHost: 'enxqu2io6sdml.x.pipedream.net'
+            }
+          });
+
+          while (stubAnalytics.length > 0) {
+            var item = stubAnalytics.shift();
+            var method = item.shift();
+            if (stubAnalytics[method]) window.analytics[method].apply(window.analytics, item);
+          }
+        }, false)
+      };
+
+      // Add a version to keep track of what's in the wild.
+      analytics.SNIPPET_VERSION = '4.1.0';
+
+      // Load Analytics.js with your key, which will automatically
+      // load the tools you've enabled for your account. Boosh!
+      analytics.load("NO_KEY");
+
+      // Make the first page call to load the integrations. If
+      // you'd like to manually name or tag the page, edit or
+      // move this call however you'd like.
+      analytics.page();
+    })();
+
+  </script>
+</head>
+
+<body>
+  <div class="App">
+    <p class="App-info">
+        View events at <a href="https://pipedream.com/r/enxqu2io6sdml" target="_blank" rel="noopener noreferrer">https://pipedream.com/r/enxqu2io6sdml</a>
+    </p>
+    <header class="App-header">
+      <div class="loading">
+        <div class="loading-wrapper">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+      <button onclick="analytics.track('Simple Demo Button Clicked'); alert('`Simple Demo Button Clicked` event tracked! Thank you!');">Click Me</button>
+      <div class="button-description">To track `Simple Demo Button Clicked` event.</div>
+    </header>
+  </div>
+</body>
+
+</html>
