@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .App-header {
@@ -22,6 +23,41 @@
   color: #2e64ea;
   margin: 0 20px;
   font-size: calc(10px + 2vmin);
+}
+
+.App-info {
+  color: #dcdcdc;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.App-info a {
+  color: #dcdcdc;
+}
+
+button {
+  background: #2e64ea;
+  color: #dcdcdc;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  transition: background ease .4s;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  background: #437aff;
+}
+
+button:active {
+  background: #1a5fdd;
+}
+
+.button-description {
+  font-size: 14px;
 }
 
 .loading {

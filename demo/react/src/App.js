@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import logo from './logo.svg';
 import './App.css';
 
 const history = createBrowserHistory();
@@ -12,6 +11,9 @@ history.listen(location => window['analytics'].page());
 const App = () => (
   <Router history={history}>
     <div className="App">
+      <p className="App-info">
+          View events at <a href="https://pipedream.com/r/enxqu2io6sdml" target="_blank" rel="noopener noreferrer">https://pipedream.com/r/enxqu2io6sdml</a>
+      </p>
       <header className="App-header">
         <div className="loading">
           <div className='loading-wrapper'>
@@ -40,7 +42,18 @@ const Home = () => (
 )
 
 const About = () => (
-  <p>About page</p>
+  <>
+    <p>About page</p>
+    <button
+      onClick={() => {
+        window['analytics'].track('React Demo Button Clicked');
+        alert('`React Demo Button Clicked` event tracked! Thank you!');
+      }}
+    >
+      Click Me
+    </button>
+    <div className="button-description">To track `React Demo Button Clicked` event.</div>
+  </>
 )
 
 export default App;
